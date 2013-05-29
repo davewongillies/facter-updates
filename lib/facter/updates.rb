@@ -20,7 +20,7 @@ Facter.add(:updates) do
     elsif Facter.value(:osfamily) == "windows"
       updates = 0
       get_updates = IO.popen("wmic qfe get", "r")
-      while line = get_updates
+      while line = get_updates.gets
         if line.match(/Update/)
           updates = updates + 1
         end
@@ -47,7 +47,7 @@ Facter.add(:updates_security) do
     elsif Facter.value(:osfamily) == "windows"
       updates_security = 0
       get_updates = IO.popen("wmic qfe get", "r")
-      while line = get_updates
+      while line = get_updates.gets
         if line.match(/Security Update/)
           updates_security = updates + 1
         end
