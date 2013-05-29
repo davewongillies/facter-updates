@@ -17,6 +17,16 @@ Facter.add(:updates) do
       updates
     elsif Facter.value(:osfamily) == "Darwin"
       updates = Facter::Util::Resolution.exec('/usr/sbin/softwareupdate -l|grep -c "\t"')
+    elsif Facter.value(:osfamily) == "windows"
+      updates = 0
+      get_updates = IO.popen("wmic qfe get", "r")
+      while line = get_updates
+        if line.match(/Update/)
+          updates = updates + 1
+        end
+      end
+      get_updates.close
+      updates
     end
   end
 end
@@ -34,6 +44,16 @@ Facter.add(:updates_security) do
         end
         updates_security
       end
+    elsif Facter.value(:osfamily) == "windows"
+      updates_security = 0
+      get_updates = IO.popen("wmic qfe get", "r")
+      while line = get_updates
+        if line.match(/Security Update/)
+          updates_security = updates + 1
+        end
+      end
+      get_updates.close
+      updates
     end
   end
 end
