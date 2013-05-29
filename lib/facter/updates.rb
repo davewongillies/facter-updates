@@ -49,7 +49,7 @@ Facter.add(:updates_security) do
       get_updates = IO.popen("wmic qfe get", "r")
       while line = get_updates.gets
         if line.match(/Security Update/)
-          updates_security = updates + 1
+          updates_security = updates_security + 1
         end
       end
       get_updates.close
