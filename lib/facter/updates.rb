@@ -15,8 +15,7 @@ Facter.add(:updates) do
         updates = Facter::Util::Resolution.exec('/usr/bin/apt-get -s -o Debug::NoLocking=true upgrade | grep -c ^Inst')
       end
       updates
-    end
-    if Facter.value(:osfamily) == "Darwin"
+    elsif Facter.value(:osfamily) == "Darwin"
       updates = Facter::Util::Resolution.exec('/usr/sbin/softwareupdate -l|grep -c "\t"')
     end
   end
