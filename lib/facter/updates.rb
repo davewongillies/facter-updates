@@ -53,7 +53,7 @@ Facter.add(:updates_security) do
         end
       end
       get_updates.close
-      updates
+      updates_security
     end
   end
 end
