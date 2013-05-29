@@ -16,6 +16,9 @@ Facter.add(:updates) do
       end
       updates
     end
+    if Facter.value(:osfamily) == "Darwin"
+      updates = Facter::Util::Resolution.exec('/usr/sbin/softwareupdate -l|grep -c "\t"')
+    end
   end
 end
 
