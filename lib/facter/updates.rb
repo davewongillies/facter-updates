@@ -5,8 +5,8 @@ Facter.add(:updates) do
         updates = 0
         update_file = File.open('/var/lib/update-notifier/updates-available')
         update_file.each_line do |line|
-          if line.split("\n").grep(/packages can be updated/)
-            updates = line.split(" ")[0]
+          if line.match(/packages? can be updated/)
+            updates = line.split(' ')[0]
           end
         end
         updates
@@ -22,8 +22,8 @@ Facter.add(:updates_security) do
         updates_security = 0
         update_file = File.open('/var/lib/update-notifier/updates-available')
         update_file.each_line do |line|
-          if line.split("\n").grep(/updates are security updates/)
-            updates_security = line.split(" ")[0]
+          if line.match(/security updates/)
+            updates_security = line.split(' ')[0]
           end
         end
         updates_security
