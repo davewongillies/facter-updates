@@ -26,6 +26,12 @@ Facter.add(:updates) do
         end
       end
       updates
+    elsif Facter.value(:osfamily) == "RedHat"
+      updates = Facter::Util::Resolution.exec('/usr/bin/yum list updates -q -C | grep -vc "Updated Packages"')
+    elsif Facter.value(:osfamily) == "Suse"
+      updates = Facter::Util::Resolution.exec('zypper --no-refresh lu --best-effort | grep -c "v |"')
+    elsif Facter.value(:operatingsystem) == "Archlinux"
+      updates = Facter::Util::Resolution.exec('pacman -Sup | grep -vc "^\(::\| \)"')
     end
   end
 end
