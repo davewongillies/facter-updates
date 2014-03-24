@@ -49,7 +49,14 @@ Facter.add(:updates_security) do
         end
         updates_security
       end
-    elsif Facter.value(:osfamily) == "windows"
+     elsif Facter.value(:osfamily) == "RedHat"
+      updates_security = 0
+      output = Facter::Util::Resolution.exec('/usr/bin/yum list-sec --security -q -C 2>/dev/null | wc -l').chomp
+         if not output.nil?
+          updates_security = output
+         end
+       updates_security
+     elsif Facter.value(:osfamily) == "windows"
       updates_security = 0
       output = Facter::Util::Resolution.exec('wmic qfe get')
       if not output.nil?
